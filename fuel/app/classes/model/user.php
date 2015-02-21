@@ -67,7 +67,7 @@ class Model_User extends Model_Base {
 		return self::find('first', array(
 			'where' => array(
 				'id' => $id,
-				'password' => self::password_to_hash($password),
+				'password' => sha1($password),
 			),
 		));
 	}
