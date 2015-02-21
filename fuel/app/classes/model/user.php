@@ -46,7 +46,7 @@ class Model_User extends Model_Base {
 			'model_to' => 'Model_Group',
 			'key_from' => 'id',
 			'key_to' => 'id',
-			'table_through' => 'users_groups',
+			'table_through' => 'groups_users',
 			'key_through_from' => 'user_id',
 			'key_through_to' => 'group_id',
 			'cascade_save' => false,
