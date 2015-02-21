@@ -3,8 +3,18 @@
 class Model_Groups_User extends Model_Base {
 	protected static $_properties = array(
 		'id',
-		'user_id',
-		'group_id',
+		'user_id' => array(
+			'data_type' => 'integer',
+			'validation' => array(
+				'required',
+			),
+		),
+		'group_id' => array(
+			'data_type' => 'integer',
+			'validation' => array(
+				'required',
+			),
+		),
 		'approve',
 		'created_at',
 		'updated_at',
@@ -18,6 +28,9 @@ class Model_Groups_User extends Model_Base {
 		'Orm\Observer_UpdatedAt' => array(
 			'events' => array('before_update'),
 			'mysql_timestamp' => false,
+		),
+		'Orm\Observer_Validation' => array(
+			'events' => array('before_save'),
 		),
 	);
 

@@ -3,8 +3,20 @@
 class Model_User extends Model_Base {
 	protected static $_properties = array(
 		'id',
-		'name',
-		'token',
+		'name' => array(
+			'data_type' => 'varchar',
+			'validation' => array(
+				'required',
+				'min_length' => array(1),
+				'max_length' => array(100),
+			),
+		),
+		'password' => array(
+			'data_type' => 'varchar',
+			'validation' => array(
+				'required',
+			),
+		),
 		'latitude',
 		'longitude',
 		'altitude',
@@ -21,6 +33,9 @@ class Model_User extends Model_Base {
 		'Orm\Observer_UpdatedAt' => array(
 			'events' => array('before_update'),
 			'mysql_timestamp' => false,
+		),
+		'Orm\Observer_Validation' => array(
+			'events' => array('before_save'),
 		),
 	);
 
