@@ -1,22 +1,21 @@
 <?php
 
-class Model_Group extends Model_Base {
+class Model_Participation_Request extends Model_Base {
 	protected static $_properties = array(
 		'id',
-		'name' => array(
-			'data_type' => 'varchar',
-			'validation' => array(
-				'required',
-				'min_length' => array(1),
-				'max_length' => array(100),
-			),
-		),
-		'leader_id' => array(
+		'user_id' => array(
 			'data_type' => 'integer',
 			'validation' => array(
 				'required',
 			),
 		),
+		'group_id' => array(
+			'data_type' => 'integer',
+			'validation' => array(
+				'required',
+			),
+		),
+		'approve',
 		'created_at',
 		'updated_at',
 	);
@@ -35,33 +34,22 @@ class Model_Group extends Model_Base {
 		),
 	);
 
-	protected static $_table_name = 'groups';
+	protected static $_table_name = 'participation_requests';
 
-	protected static $_has_many = array(
-		'requests' => array(
-			'model_to' => 'Model_Participation_Request',
-			'key_from' => 'id',
-			'key_to' => 'group_id',
-			'cascade_save' => false,
-			'cascade_delete' => false,
-		),
-	);
-
-	protected static $_many_many = array(
-		'users' => array(
+	protected static $_belongs_to = array(
+		'user' => array(
 			'model_to' => 'Model_User',
-			'key_from' => 'id',
+			'key_from' => 'user_id',
 			'key_to' => 'id',
-			'table_through' => 'groups_users',
-			'key_through_from' => 'group_id',
-			'key_through_to' => 'user_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+		'group' => array(
+			'model_to' => 'Model_Group',
+			'key_from' => 'group_id',
+			'key_to' => 'id',
 			'cascade_save' => false,
 			'cascade_delete' => false,
 		),
 	);
-
-	protected static $_to_array_exclude = array(
-		'updated_at',
-	);
-
 }
