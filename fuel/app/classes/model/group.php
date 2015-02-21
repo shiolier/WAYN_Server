@@ -37,6 +37,19 @@ class Model_Group extends Model_Base {
 
 	protected static $_table_name = 'groups';
 
+	protected static $_many_many = array(
+		'users' => array(
+			'model_to' => 'Model_User',
+			'key_from' => 'id',
+			'key_to' => 'id',
+			'table_through' => 'users_groups',
+			'key_through_from' => 'group_id',
+			'key_through_to' => 'user_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
+
 	protected static $_to_array_exclude = array(
 		'updated_at',
 	);

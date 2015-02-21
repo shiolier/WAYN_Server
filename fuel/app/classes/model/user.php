@@ -41,6 +41,19 @@ class Model_User extends Model_Base {
 
 	protected static $_table_name = 'users';
 
+	protected static $_many_many = array(
+		'groups' => array(
+			'model_to' => 'Model_Group',
+			'key_from' => 'id',
+			'key_to' => 'id',
+			'table_through' => 'users_groups',
+			'key_through_from' => 'user_id',
+			'key_through_to' => 'group_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
+
 	protected static $_to_array_exclude = array(
 		'password',
 		'updated_at',
