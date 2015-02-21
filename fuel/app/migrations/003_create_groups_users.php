@@ -15,6 +15,8 @@ class Create_groups_users
 			'updated_at' => array('constraint' => 11, 'type' => 'int', 'null' => true),
 
 		), array('id'));
+
+		\DBUtil::create_index('groups_users', array('user_id', 'group_id'), 'user_and_group_id_unique_index', 'UNIQUE');
 	}
 
 	public function down()
