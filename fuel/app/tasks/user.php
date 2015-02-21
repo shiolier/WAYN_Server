@@ -20,6 +20,22 @@ class User {
 		}
 	}
 
+	public function group($id = 0) {
+		Cli::write(
+			"\n===========================================" .
+			"\nBelong Group" .
+			"\n===========================================\n\n"
+		);
+		
+		$id = Cli::prompt('id');
+		$user = Model_User::find('first', array('where' => array(array('id', '=', $id))));
+		//$this->export($user);
+
+		foreach ($user->groups as $group) {
+			$this->export_group($group);
+		}
+	}
+
 	public function create() {
 		Cli::write(
 			"\n===========================================" .
@@ -46,7 +62,7 @@ class User {
 		);
 
 		$id = Cli::prompt('id');
-		$user = Model_User::find('first', array('where' => array(array('id', '=', $conditions))));
+		$user = Model_User::find('first', array('where' => array(array('id', '=', $id))));
 		$this->export($user);
 
 		$key = Cli::prompt('key');
@@ -78,7 +94,7 @@ class User {
 		);
 
 		$id = Cli::prompt('id');
-		$user = Model_User::find('first', array('where' => array(array('id', '=', $conditions))));
+		$user = Model_User::find('first', array('where' => array(array('id', '=', $id))));
 		$this->export($user);
 
 		while(true) {
@@ -125,6 +141,17 @@ class User {
 			"updated_location_at: {$user->updated_location_at} ({$user->updated_location_at()})\n" .
 			"created_at:          {$user->created_at} ({$user->created_at()})\n" .
 			"updated_at:          {$user->updated_at} ({$user->updated_at()})\n"
+		);
+	}
+
+	private function export_group($group) {
+		Cli::write(
+			"**************************************\n" .
+			"id:                  {$group->id}\n" .
+			"name:                {$group->name}\n" .
+			"leader_id:           {$group->leader_id}\n" .
+			"created_at:          {$group->created_at} ({$group->created_at()})\n" .
+			"updated_at:          {$group->updated_at} ({$group->updated_at()})\n"
 		);
 	}
 }
