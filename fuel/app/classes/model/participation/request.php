@@ -36,4 +36,20 @@ class Model_Participation_Request extends Model_Base {
 
 	protected static $_table_name = 'participation_requests';
 
+	protected static $_belongs_to = array(
+		'user' => array(
+			'model_to' => 'Model_User',
+			'key_from' => 'user_id',
+			'key_to' => 'id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+		'group' => array(
+			'model_to' => 'Model_Group',
+			'key_from' => 'group_id',
+			'key_to' => 'id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
 }

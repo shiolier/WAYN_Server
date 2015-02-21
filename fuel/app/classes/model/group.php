@@ -37,6 +37,16 @@ class Model_Group extends Model_Base {
 
 	protected static $_table_name = 'groups';
 
+	protected static $_has_many = array(
+		'requests' => array(
+			'model_to' => 'Model_Participation_Request',
+			'key_from' => 'id',
+			'key_to' => 'group_id',
+			'cascade_save' => false,
+			'cascade_delete' => false,
+		),
+	);
+
 	protected static $_many_many = array(
 		'users' => array(
 			'model_to' => 'Model_User',
