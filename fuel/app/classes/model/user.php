@@ -41,4 +41,37 @@ class Model_User extends Model_Base {
 
 	protected static $_table_name = 'users';
 
+	protected static $_to_array_exclude = array(
+		'password',
+		'updated_at',
+	);
+
+	public function updated_location_at($format = null) {
+		return $this->date_format('updated_location_at', $format);
+	}
+
+	public static function auth($id, $password) {
+		return self::find('first', array(
+			'where' => array(
+				'id' => $id,
+				'password' => self::password_to_hash($password),
+			),
+		));
+	}
+
+	/**
+	 * 位置情報の更新
+	 * @param $params
+	 * 		latitude	double
+	 * 		longitude	double
+	 * 		altitude	double
+	 */
+	public function update_location($params) {
+		$this->latitude = $params['latitude'];
+		$this->longitude = $params['longitude'];
+		$this->altitude = $params['altitude'];
+		$this->updated_location_at = time();
+
+		return $this->save();
+	}
 }

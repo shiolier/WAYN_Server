@@ -37,4 +37,8 @@ class Model_Group extends Model_Base {
 
 	protected static $_table_name = 'groups';
 
+	protected static $_to_array_exclude = array(
+		'updated_at',
+	);
+
 }
