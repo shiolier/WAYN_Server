@@ -1,0 +1,21 @@
+<?php
+
+return array(
+	'default' => array(
+		'type'        => 'pdo',
+		'connection'  => array(
+			'dsn'        => 'mysql:host=localhost;dbname=db_name',
+			'username'   => '',
+			'password'   => '',
+			'persistent' => false,
+			'compress'   => false,
+		),
+		'identifier'   => '`',
+		'table_prefix' => '',
+		'charset'      => 'utf8',
+		'collation'    => false,
+		'enable_cache' => true,
+		'profiling'    => false,
+		'readonly'     => false,
+	),
+);
