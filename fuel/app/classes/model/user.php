@@ -106,4 +106,13 @@ class Model_User extends Model_Base {
 		}
 		return false;
 	}
+
+	public function is_request($group_id) {
+		foreach ($this->requests as $request) {
+			if ($request->group_id == $group_id) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
