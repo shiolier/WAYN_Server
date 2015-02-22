@@ -97,4 +97,22 @@ class Model_User extends Model_Base {
 
 		return $this->save();
 	}
+
+	public function is_participation($group_id) {
+		foreach ($this->groups as $group) {
+			if ($group->id == $group_id) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	public function is_request($group_id) {
+		foreach ($this->requests as $request) {
+			if ($request->group_id == $group_id) {
+				return true;
+			}
+		}
+		return false;
+	}
 }
