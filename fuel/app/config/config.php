@@ -202,12 +202,16 @@ return array(
 	/**
 	 * Validation settings
 	 */
-	// 'validation' => array(
+	'validation' => array(
 		/**
 		 * Wether to fallback to global when a value is not found in the input array.
 		 */
 		// 'global_input_fallback' => true,
-	// ),
+		'open_list' => '',
+		'close_list' => '',
+		'open_error' => '',
+		'close_error' => '',
+	),
 
 	/**
 	 * Controller class prefix
@@ -258,7 +262,7 @@ return array(
 	/**************************************************************************/
 	/* Always Load                                                            */
 	/**************************************************************************/
-	// 'always_load'  => array(
+	'always_load'  => array(
 
 		/**
 		 * These packages are loaded on Fuel's startup.
@@ -271,9 +275,9 @@ return array(
 		 *     array('auth'	=> PKGPATH.'auth/')
 		 * );
 		 */
-		// 'packages'  => array(
-		// 	//'orm',
-		// ),
+		'packages'  => array(
+			'orm',
+		),
 
 		/**
 		 * These modules are always loaded on Fuel's startup. You can specify them
@@ -309,6 +313,6 @@ return array(
 		 * If you don't want the lang in a group use null as groupname.
 		 */
 		// 'language'  => array(),
-	// ),
+	),
 
 );
