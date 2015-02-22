@@ -27,4 +27,12 @@ class Model_Base extends Model {
 		}
 		return date($format, $this->$key);
 	}
+
+	public static function find_by_id($id) {
+		return static::find('first', array(
+			'where' => array(
+				array('id', '=', $id),
+			),
+		));
+	}
 }
