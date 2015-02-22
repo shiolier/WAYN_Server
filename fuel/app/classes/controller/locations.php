@@ -19,7 +19,7 @@ class Controller_Locations extends Controller_Base {
 					'longitude' => $user->longitude,
 					'altitude' => $user->altitude,
 				);
-				$this->result['updated_location_at'] = $user->updated_location_at();
+				$this->result['updated_location_at'] = $user->updated_location_at;
 				return $this->response($this->result);
 			} catch (ValidationFailed $e) {
 				$this->result['error'] = array(

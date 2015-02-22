@@ -113,13 +113,17 @@ class User {
 		}
 	}
 
-	public function all_delete($auto_increment = 10001) {
+	public function all_delete($delete_admin = false, $auto_increment = 10001) {
 		while(true) {
 			$is_delete = Cli::prompt('Really? [y/N]');
 			if ($is_delete == 'y') {
-				$delete_row = \DB::delete('users')->execute();
+				if ($delete_admin) {
+					$delete_row = \DB::delete('users')->execute();
+				} else {
+					$delete_row = \DB::delete('users')->where('id', '>', 10000)->execute();
+				}
 				echo "削除行: " . $delete_row . "\n";
-				DB::query('ALTER TABLE ' . self::$_table_name . " AUTO_INCREMENT=${auto_increment}, ALGORITHM=COPY;")->execute();
+				\DB::query("ALTER TABLE users AUTO_INCREMENT=${auto_increment}, ALGORITHM=COPY;")->execute();
 				return;
 			} else if ($is_delete == 'N') {
 				return;
