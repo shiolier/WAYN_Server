@@ -14,7 +14,7 @@ class Controller_Groups extends Controller_Base {
 				));
 				$group->save();
 				$user->groups[] = $group;
-				$this->result['result'] = $user->save();
+				$this->result = $group->to_array();
 				return $this->response($this->result);
 			} catch (ValidationFailed $e) {
 				$this->result['error'] = array(
