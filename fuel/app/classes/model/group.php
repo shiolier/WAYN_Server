@@ -62,6 +62,8 @@ class Model_Group extends Model_Base {
 
 	protected static $_to_array_exclude = array(
 		'updated_at',
+		'users',
+		'requests',
 	);
 
 }

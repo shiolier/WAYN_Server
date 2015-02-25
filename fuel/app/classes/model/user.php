@@ -67,6 +67,8 @@ class Model_User extends Model_Base {
 	protected static $_to_array_exclude = array(
 		'password',
 		'updated_at',
+		'groups',
+		'requests',
 	);
 
 	public function updated_location_at($format = null) {
