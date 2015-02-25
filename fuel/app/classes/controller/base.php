@@ -1,6 +1,8 @@
 <?php
 
 abstract class Controller_Base extends Controller_Rest {
+	protected $result = array();
+	
 	protected $_supported_formats = array(
 		'xml' => 'application/xml',
 		// 'rawxml' => 'application/xml',

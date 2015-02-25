@@ -14,9 +14,11 @@ class Controller_Groups extends Controller_Base {
 				));
 				$group->save();
 				$user->groups[] = $group;
+				$user->save();
+
 				$this->result['id'] = $group->id;
 				$this->result['name'] = $group->name;
-				$this->result['user'] = $user->to_array();
+				$this->result['leader'] = $user->to_array();
 				$this->result['created_at'] = $group->created_at;
 				return $this->response($this->result);
 			} catch (ValidationFailed $e) {
@@ -32,6 +34,57 @@ class Controller_Groups extends Controller_Base {
 				);
 				return $this->response($this->result, 400);
 			}
+		}
+
+		$this->result['error'] = array(
+			'kind' => 'authentication',
+			'message' => 'Authentication failure',
+		);
+		return $this->response($this->result, 400);
+	}
+
+	public function post_update_name($group_id = 0) {
+		if ($user = Model_User::auth(Input::json('id'), Input::json('password'))) {
+			if ($group_id <= 0 || ($group = Model_Group::find_by_id($group_id)) == null) {
+				$this->result['error'] = array(
+					'kind' => 'http',
+					'message' => 'Not Found',
+				);
+				return $this->response($this->result, 404);
+			}
+
+			if ($user->id != $group->leader_id) {
+				$this->result['error'] = array(
+					'kind' => 'authentication',
+					'message' => 'Leader only',
+				);
+				return $this->response($this->result, 400);
+			}
+
+			$group->name = Input::json('group_name');
+			$this->result['result'] = $group->save();
+			return $this->response($this->result);
+		}
+
+		$this->result['error'] = array(
+			'kind' => 'authentication',
+			'message' => 'Authentication failure',
+		);
+		return $this->response($this->result, 400);
+	}
+
+	public function get_belong() {
+		if ($user = Model_User::auth(Input::get('id'), Input::get('password'))) {
+			foreach ($user->groups as $group) {
+				$group_array = array(
+					'id' => $group->id,
+					'name' => $group->name,
+					'leader' => Model_User::find_by_id($group->leader_id)->to_array(),
+					'created_at' => $group->created_at,
+				);
+				$this->result[] = $group_array;
+			}
+			return $this->response($this->result);
 		}
 
 		$this->result['error'] = array(
