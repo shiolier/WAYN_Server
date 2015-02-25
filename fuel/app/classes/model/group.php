@@ -65,5 +65,4 @@ class Model_Group extends Model_Base {
 		'users',
 		'requests',
 	);
-
 }

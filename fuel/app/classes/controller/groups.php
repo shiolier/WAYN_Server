@@ -236,4 +236,43 @@ class Controller_Groups extends Controller_Base {
 		);
 		return $this->response($this->result, 400);
 	}
+
+	public function post_leave($group_id = 0) {
+		if ($user = Model_User::auth(Input::json('id'), Input::json('password'))) {
+			if ($group_id <= 0 || ($group = Model_Group::find_by_id($group_id)) == null) {
+				$this->result['error'] = array(
+					'kind' => 'http',
+					'message' => 'Not Found',
+				);
+				return $this->response($this->result, 404);
+			}
+
+			if (!$user->is_participation($group_id)) {
+				$this->result['error'] = array(
+					'kind' => 'authentication',
+					'message' => 'Member only',
+				);
+				return $this->response($this->result, 400);
+			}
+
+			if ($user->id == $group->leader_id) {
+				$this->result['error'] = array(
+					'kind' => 'authentication',
+					'message' => 'Leader can not leave',
+				);
+				return $this->response($this->result, 400);
+			}
+
+			unset($group->users[$user->id]);
+			$this->result['result'] = $group->save();
+			
+			return $this->response($this->result);
+		}
+
+		$this->result['error'] = array(
+			'kind' => 'authentication',
+			'message' => 'Authentication failure',
+		);
+		return $this->response($this->result, 400);
+	}
 }
