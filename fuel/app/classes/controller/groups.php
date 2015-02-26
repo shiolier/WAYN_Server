@@ -227,7 +227,8 @@ class Controller_Groups extends Controller_Base {
 				return $this->response($this->result, 400);
 			}
 
-			$this->result['result'] = $request->delete();
+			$request->delete();
+			$this->result['result'] = true;
 			return $this->response($this->result);
 		}
 
