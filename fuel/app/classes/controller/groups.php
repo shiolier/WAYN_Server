@@ -275,4 +275,31 @@ class Controller_Groups extends Controller_Base {
 		);
 		return $this->response($this->result, 400);
 	}
+
+	public function get_info($group_id = 0) {
+		if ($user = Model_User::auth(Input::get('id'), Input::get('password'))) {
+			if ($group_id <= 0 || ($group = Model_Group::find_by_id($group_id)) == null) {
+				$this->result['error'] = array(
+					'kind' => 'http',
+					'message' => 'Not Found',
+				);
+				return $this->response($this->result, 404);
+			}
+
+			$this->result = array(
+				'id' => $group->id,
+				'name' => $group->name,
+				'leader' => Model_User::find_by_id($group->leader_id)->to_array(),
+				'created_at' => $group->created_at,
+			);
+			
+			return $this->response($this->result);
+		}
+
+		$this->result['error'] = array(
+			'kind' => 'authentication',
+			'message' => 'Authentication failure',
+		);
+		return $this->response($this->result, 400);
+	}
 }
