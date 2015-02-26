@@ -159,6 +159,7 @@ class Controller_Groups extends Controller_Base {
 				$this->result[] = array(
 					'id' => $request->id,
 					'user' => $request->user->to_array(),
+					'group' => $request->group->to_array(),
 					'request_time' => $request->created_at,
 				);
 			}
