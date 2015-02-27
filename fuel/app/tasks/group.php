@@ -113,6 +113,22 @@ class Group {
 		}
 	}
 
+	public function all_delete($auto_increment = 10001) {
+		while(true) {
+			$is_delete = Cli::prompt('Really? [y/N]');
+			if ($is_delete == 'y') {
+				$delete_row = \DB::delete('users')->execute();
+				echo "削除行: " . $delete_row . "\n";
+				\DB::query("ALTER TABLE users AUTO_INCREMENT=${auto_increment}, ALGORITHM=COPY;")->execute();
+				return;
+			} else if ($is_delete == 'N') {
+				return;
+			} else {
+				Cli::write('y or N');
+			}
+		}
+	}
+
 	private function export($group) {
 		Cli::write(
 			"**************************************\n" .
