@@ -9,7 +9,7 @@ class Controller_Groups extends Controller_Base {
 		if ($user = Model_User::auth(Input::json('id'), Input::json('password'))) {
 			try {
 				$group = Model_Group::forge(array(
-					'name' => Input::json('group_name'),
+					'name' => Input::json('group.name'),
 					'leader_id' => $user->id,
 				));
 				$group->save();
